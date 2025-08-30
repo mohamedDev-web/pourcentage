@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pourcentage</title>
+</head>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        /* background-color: black;
+        color:white; */
+    }
+
+    form {
+        width: 300px;
+        height: 200px;
+        /* border:3px solid black; */
+        box-shadow: 0 0 3px blue;
+        border-radius: 30px;
+        padding: 10px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    body>form>label {
+        display: inline-block;
+        width: 100%;
+        font-size: 20px;
+    }
+
+    form>input {
+        width: 100%;
+        height: 30px;
+        border-radius: 0px 0px 100px 100px;
+        outline: none;
+        border: none;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+    }
+
+    label>* {
+        position: absolute;
+        right: 10px;
+        width: 50px;
+        height: 20px;
+        outline: none;
+        padding: 0px;
+
+    }
+
+    select {
+        width: 53px;
+    }
+
+    body>div {
+
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 75px;
+        background-image: conic-gradient(blue, violet, red, orange, yellow, blue);
+        color: white;
+        font-size: 30px;
+        text-shadow: 0 0 3px black;
+        display: none;
+    }
+
+    #res {
+        font-size: 30px;
+        text-shadow: 0 0 3px black;
+    }
+</style>
+
+<body>
+
+    <form>
+        <label> select the color:
+            <select id="s">
+                <option value="red">red</option>
+                <option value="black">black</option>
+                <option value="green">green</option>
+            </select>
+        </label>
+        <label>enter number enter 0 et 100:
+            <input type="number" min="0" max="100">
+        </label>
+        <label>pourcentage:
+            <select id="pourcentage"></select>
+        </label>
+        <br>
+        <input type="submit" value="submit">
+
+    </form>
+    <div>
+        <span>result is : <span id="r"></span></span>
+    </div>
+    <script>
+
+        let select = document.getElementById("s");
+        let nbr = document.querySelector("input[type='number']");
+        let sub = document.querySelector("input[type='submit']");
+        let form = document.getElementsByTagName("form")[0];
+        let span = document.getElementById("r");
+        let redlist = [90, 75, 60, 55, 40, 25, 10];
+        let blacklist = [100, 115, 130, 145, 160, 175];
+        let greenlist = [190, 205, 220, 235, 250, 265];
+
+
+        for (let i = 0; i < redlist.length; i++) {
+            let a = document.createElement("option");
+            a.innerHTML = `<option value='${redlist[i]}'>${redlist[i]}</option>`;
+            document.getElementById("pourcentage").appendChild(a);
+        }
+        select.addEventListener('change', () => {
+            document.getElementById("pourcentage").innerHTML = "";
+            if (select.value === "red" && select.value !== '') {
+                for (let i = 0; i < redlist.length; i++) {
+                    let a = document.createElement("option");
+                    a.innerHTML = `<option value='${redlist[i]}'>${redlist[i]}</option>`;
+                    document.getElementById("pourcentage").appendChild(a);
+                }
+
+            } else if (select.value === "black" && select.value !== '') {
+
+                for (let i = 0; i < blacklist.length; i++) {
+                    let a = document.createElement("option");
+                    a.innerHTML = `<option value='${blacklist[i]}'>${blacklist[i]}</option>`;
+                    document.getElementById("pourcentage").appendChild(a);
+                }
+
+
+            } else if (select.value === "green" && select.value !== '') {
+
+                for (let i = 0; i < greenlist.length; i++) {
+                    let a = document.createElement("option");
+                    a.innerHTML = `<option value='${greenlist[i]}'>${greenlist[i]}</option>`;
+                    document.getElementById("pourcentage").appendChild(a);
+
+                }
+
+            }
+        })
+
+
+
+        form.addEventListener('submit', function (ele) {
+            ele.preventDefault();
+            if (select.value === "red") {
+                var res = nbr.value - document.getElementById("pourcentage").value;
+            } else if (select.value === "black") {
+                var res = document.getElementById("pourcentage").value - (200 - document.getElementById("pourcentage").value) - nbr.value;
+            } else if (select.value === "green") {
+                var res = document.getElementById("pourcentage").value - (300 - document.getElementById("pourcentage").value) - nbr.value;
+            }
+            // let elem = document.querySelector("body>div")
+            // elem.style.cssText = "display:flex;";
+            document.querySelector("body>div").style.display = `flex`
+            // var result = document.createTextNode(res);
+            span.innerHTML = res;
+        })
+
+    </script>
+</body>
+
+</html>
